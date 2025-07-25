@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAOUNDE Conferences</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #083d7f;
+            --secondary: #1e40af;
+            --accent: #3b82f6;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --gray-light: #f1f5f9;
+            --gray: #64748b;
+            --dark: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(30, 64, 175, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-menu p {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            min-height: 100vh;
+            padding-top: 120px;
+        }
+
+        .hero-section {
+            min-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 50%, var(--gray-light) 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 1000px;
+            z-index: 10;
+            position: relative;
+            margin-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+        }
+
+        .conferences-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .conference-card {
+            flex: 1;
+            min-width: 400px;
+            max-width: 500px;
+            background: var(--white);
+            border: 2px solid rgba(30, 64, 175, 0.1);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.08);
+        }
+
+        .conference-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(30, 64, 175, 0.2);
+            box-shadow: 0 25px 60px rgba(30, 64, 175, 0.15);
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .conference-logo {
+            width: 120px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            padding: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .conference-card:hover .conference-logo {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .conference-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .conference-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .conference-period {
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .conference-description {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .conference-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .conference-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .conference-btn:hover .btn-arrow {
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary) 55%, #2563eb 20%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+            margin-top: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-section h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* Admin button */
+        .admin-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(8, 61, 127, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+            color: white;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .conferences-grid {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 0 1rem;
+            }
+
+            .conference-card {
+                max-width: none;
+                min-width: auto;
+                padding: 2.5rem 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <img src="{{ url_for('static', filename='images/iaounde.png') }}" alt="IAOUNDE Logo" />
+            </a>
+            <div class="nav-menu">
+                <p>IAOUNDE Conferences</p>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">IAOUNDE Global Conferences</h1>
+                <p class="hero-subtitle">
+                    Connecting cultures, inspiring innovation, shaping the future
+                </p>
+            </div>
+
+            <div class="conferences-grid">
+                {% for conference in conferences %}
+                <div class="conference-card" onclick="navigateToConference('{{ conference.lien_site }}')">
+                    <div class="card-content">
+                        <div class="conference-logo">
+                            <img src="{{ conference.logo_url }}" alt="{{ conference.nom }} Logo" />
+                        </div>
+                        <h3 class="conference-title">{{ conference.nom }}</h3>
+                        <div class="conference-period">
+                            {{ conference.periode_debut.strftime('%m/%d/%Y') }} - {{ conference.periode_fin.strftime('%m/%d/%Y') }}
+                        </div>
+                        {% if conference.description %}
+                        <p class="conference-description">
+                            {{ conference.description }}
+                        </p>
+                        {% endif %}
+                        <button class="conference-btn">
+                            Discover
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                {% if not conferences %}
+                <div style="text-align: center; padding: 4rem;">
+                    <h3 style="color: var(--gray); margin-bottom: 1rem;">No conferences available</h3>
+                    <p style="color: var(--gray);">Come back soon to discover our upcoming events!</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2025 IAOUNDE Global Conferences. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Admin button -->
+    <a href="{{ url_for('login') }}" class="admin-btn" title="Administration">
+        ⚙️
+    </a>
+
+    <script>
+        function navigateToConference(url) {
+            window.open(url, '_blank');
+        }
+
+        // Header scroll effect
+       window.addEventListener('scroll', () => {
+           const header = document.querySelector('.header');
+           if (window.scrollY > 50) {
+               header.style.background = 'rgba(248, 250, 252, 0.98)';
+               header.style.boxShadow = '0 4px 20px rgba(30, 64, 175, 0.1)';
+           } else {
+               header.style.background = 'rgba(248, 250, 252, 0.95)';
+               header.style.boxShadow = 'none';
+           }
+       });
+   </script>
+</body>
+</html>
