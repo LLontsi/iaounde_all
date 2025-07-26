@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - "54324:5432"       # exposé hors docker sur le port 54324 (localhost)
+      - "54324:5432"       
     networks:
       - iaounde_conferences
     volumes:
@@ -23,15 +23,14 @@ services:
     container_name: conference-iaounde
     restart: unless-stopped
     ports:
-      - "5003:5000"       # accès à l'app Flask depuis localhost:5003
+      - "5003:5000"       
     networks:
       - iaounde_conferences
     depends_on:
-      - postgres          # attend que le service postgres soit démarré
+      - postgres         
     stdin_open: true
     tty: true
     environment:
-      # IMPORTANT: utiliser le nom de service 'postgres' (réseau interne)
       DATABASE_URL: postgresql://postgres:password@postgres:5432/iaounde_conferences
 
 networks:
