@@ -30,13 +30,7 @@
                                 <i class="fas fa-calendar-alt"></i> Conférences
                             </a>
                         </li>
-                        {% if current_user.is_super_admin() %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('admin_users') }}">
-                                <i class="fas fa-users"></i> Utilisateurs
-                            </a>
-                        </li>
-                        {% endif %}
+                      
                     </ul>
                     
                     <hr class="sidebar-divider">
