@@ -20,14 +20,14 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copier les fichiers de requirements depuis le dossier de l'app
-COPY flask/requirements.txt .
+COPY requirements.txt .
 
 # Installer les dépendances Python
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir --retries 10 -r requirements.txt
 
 # Copier tout le code de l'application
-COPY flask/ .
+COPY iaounde_conferences/ .
 
 
 # Passer à l'utilisateur non-root

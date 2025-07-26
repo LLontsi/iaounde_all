@@ -15,7 +15,7 @@ services:
       # ✅ GARDER le volume persistant (pour la persistence des données)
       - postgres_data:/var/lib/postgresql/data
       # ✅ GARDER le dump (pour l'initialisation quand le volume est vide)
-      - ./dump_conference_informatique.sql:/docker-entrypoint-initdb.d/iaounde_conferences.sql
+      - ./iaounde_conferences.sql:/docker-entrypoint-initdb.d/iaounde_conferences.sql
 
   conference-iaounde:
     image: lontsi/iaounde:latest

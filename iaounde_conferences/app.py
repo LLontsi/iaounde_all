@@ -227,4 +227,4 @@ def admin_add_user():
     return render_template('admin/add_user.html', form=form)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
