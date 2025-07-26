@@ -4,10 +4,11 @@ from werkzeug.utils import secure_filename
 import os
 from datetime import datetime
 from functools import wraps
-
+from config import Config, create_upload_dir
 from config import Config
 from models import db, Conference, User
 from forms import ConferenceForm, LoginForm, UserForm
+from flask import send_from_directory
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -28,6 +29,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 with app.app_context():
     db.create_all()
+    create_upload_dir(app)
     # Créer super admin par défaut
     if not User.query.filter_by(role='super_admin').first():
         admin = User(username='admin', email='admin@iaounde.com', role='super_admin')
@@ -225,6 +227,12 @@ def admin_add_user():
         return redirect(url_for('admin_users'))
     
     return render_template('admin/add_user.html', form=form)
+
+@app.route('/uploads/<path:filename>')
+def uploaded_file(filename):
+    """Servir tous les fichiers uploadés"""
+    upload_base = os.path.dirname(app.config['UPLOAD_FOLDER'])  # /app/uploads
+    return send_from_directory(upload_base, filename)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

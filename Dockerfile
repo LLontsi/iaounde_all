@@ -7,9 +7,11 @@ ENV PYTHONUNBUFFERED=1
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
+# Définir le répertoire de travail
+WORKDIR /app
+
 # Créer un utilisateur non-root
 RUN adduser --disabled-password --gecos '' appuser
-
 
 # Installer les dépendances système
 RUN apt-get update && apt-get install -y \
@@ -29,8 +31,12 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copier tout le code de l'application
 COPY iaounde_conferences/ .
 
+# Créer le répertoire uploads avec les bonnes permissions AVANT de changer d'utilisateur
+RUN mkdir -p /app/static/uploads/logos && \
+    chmod -R 755 /app/static && \
+    chown -R appuser:appuser /app
 
-# Passer à l'utilisateur non-root
+# Passer à l'utilisateur non-root APRÈS avoir créé les répertoires
 USER appuser
 
 # Exposer le port Flask
@@ -38,4 +44,3 @@ EXPOSE 5000
 
 # Script de démarrage avec gestion de la base de données
 CMD ["python", "app.py"]
-

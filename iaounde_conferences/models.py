@@ -42,5 +42,5 @@ class Conference(db.Model):
     @property
     def logo_url(self):
         if self.logo:
-            return f'/static/uploads/logos/{self.logo}'
+            return f'/uploads/logos/{self.logo}'
         return '/static/images/default-logo.png'

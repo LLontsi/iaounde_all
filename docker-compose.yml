@@ -32,7 +32,7 @@ services:
     tty: true
     environment:
       DATABASE_URL: postgresql://postgres:password@postgres:5432/iaounde_conferences
-
+    
 networks:
   iaounde_conferences:
     driver: bridge

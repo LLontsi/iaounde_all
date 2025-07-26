@@ -81,7 +81,6 @@
 
                         <form method="POST">
                             {{ form.hidden_tag() }}
-                            
                             <div class="mb-3">
                                 {{ form.username.label(class="form-label fw-bold") }}
                                 {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else "")) }}
