@@ -319,7 +319,7 @@
         }
 
         /* Mobile */
-        @media (max-width: 768px) {
+        @media (max-width: 830px) {
             .conferences-grid {
                 flex-direction: column;
                 gap: 2rem;
@@ -371,7 +371,7 @@
                         </div>
                         <h3 class="conference-title">{{ conference.nom }}</h3>
                         <div class="conference-period">
-                            {{ conference.periode_debut.strftime('%m/%d/%Y') }} - {{ conference.periode_fin.strftime('%m/%d/%Y') }}
+                            {{ conference.periode_debut.strftime('%d/%m/%Y') }} - {{ conference.periode_fin.strftime('%d/%m/%Y') }}
                         </div>
                         {% if conference.description %}
                         <p class="conference-description">
