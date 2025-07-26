@@ -182,8 +182,9 @@
         }
 
         .conference-description {
-            color: var(--gray);
+            color: var(--dark);        /* Changé de var(--gray) à var(--dark) pour noir */
             font-size: 1rem;
+            font-weight: 700;          /* Ajouté pour gras (bold) */
             margin-bottom: 2.5rem;
             line-height: 1.7;
         }
@@ -401,11 +402,6 @@
             <p>&copy; 2025 IAOUNDE Global Conferences. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- Admin button -->
-    <a href="{{ url_for('login') }}" class="admin-btn" title="Administration">
-        ⚙️
-    </a>
 
     <script>
         function navigateToConference(url) {

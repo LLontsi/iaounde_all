@@ -1,20 +1,21 @@
+
 services:
   postgres:
     image: postgres:15
-    container_name: postgres_all_conference_site
+    container_name: postgres_all_conference_sites
     restart: always
     environment:
       POSTGRES_DB: iaounde_conferences
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - "54324:5432"
+      - "54324:5432"       # exposé hors docker sur le port 54324 (localhost)
     networks:
       - iaounde_conferences
     volumes:
-      # ✅ GARDER le volume persistant (pour la persistence des données)
-      - postgres_data:/var/lib/postgresql/data
-      # ✅ GARDER le dump (pour l'initialisation quand le volume est vide)
+      # Volume persistant (décommente pour garder les données entre les redémarrages)
+      - postgres_data:/var/lib/postgresql/data  
+      # Script d'initialisation (le dump SQL pour créer tables, données etc.)
       - ./iaounde_conferences.sql:/docker-entrypoint-initdb.d/iaounde_conferences.sql
 
   conference-iaounde:
@@ -22,13 +23,16 @@ services:
     container_name: conference-iaounde
     restart: unless-stopped
     ports:
-      - "5003:5000"
+      - "5003:5000"       # accès à l'app Flask depuis localhost:5003
     networks:
       - iaounde_conferences
     depends_on:
-      - postgres
+      - postgres          # attend que le service postgres soit démarré
     stdin_open: true
     tty: true
+    environment:
+      # IMPORTANT: utiliser le nom de service 'postgres' (réseau interne)
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/iaounde_conferences
 
 networks:
   iaounde_conferences:

@@ -8,7 +8,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
+-- SET transaction_timeout = 0;  -- Ligne commentée pour compatibilité PostgreSQL 15
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -38,7 +38,6 @@ CREATE TABLE public.conferences (
     created_by integer
 );
 
-
 ALTER TABLE public.conferences OWNER TO postgres;
 
 --
@@ -53,7 +52,6 @@ CREATE SEQUENCE public.conferences_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
 ALTER SEQUENCE public.conferences_id_seq OWNER TO postgres;
 
 --
@@ -61,7 +59,6 @@ ALTER SEQUENCE public.conferences_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.conferences_id_seq OWNED BY public.conferences.id;
-
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
@@ -77,7 +74,6 @@ CREATE TABLE public.users (
     created_at timestamp without time zone
 );
 
-
 ALTER TABLE public.users OWNER TO postgres;
 
 --
@@ -92,7 +88,6 @@ CREATE SEQUENCE public.users_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
 ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
 
 --
@@ -101,20 +96,17 @@ ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
-
 --
 -- Name: conferences id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.conferences ALTER COLUMN id SET DEFAULT nextval('public.conferences_id_seq'::regclass);
 
-
 --
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
 
 --
 -- Data for Name: conferences; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -125,7 +117,6 @@ COPY public.conferences (id, nom, periode_debut, periode_fin, logo, description,
 2	IAOUNDE-AMBAN	2025-07-28	2025-07-30	20250725_200128_IA_OUNDE_Votre_story_2.png	The workshop, organized by the ESTLC (Higher School of Transport, Logistics, and Commerce) of the University of Ebolowa at Ambam, brought together researchers and professionals — including startup founders and representatives from government ministries — from both Cameroon and France.\r\n\r\nPresentations covered several domains where the use of AI is particularly relevant, including:\r\n    Transportation, Logistics, Commerce ,Agricultur, Healthcare,Energy\r\nIssues related to the protection of personal data were also discussed.\r\nThe audience included a diverse range of participants, from junior researchers and students to senior industry and academic experts, all actively engaged in the discussions.\r\nThe workshop also served as a catalyst for new collaborative initiatives. For instance, the Ministry of Transport of Cameroon and Grenoble INP–UGA are currently discussing the signing of a Memorandum of Understanding (MoU), marking the beginning of a long-term and intensive c	https://amban.iaounde.com/	2025-07-25 19:01:28.740733	2025-07-25 19:01:28.740739	1
 \.
 
-
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -134,20 +125,17 @@ COPY public.users (id, username, email, password_hash, role, is_active, created_
 1	admin	admin@iaounde.com	pbkdf2:sha256:600000$xpJEypwQVRkGUrXl$9c16660cecde13ea56bca453dd222a4454c79f18df431632522e3acbccf8b7b8	super_admin	t	2025-07-25 18:22:33.127462
 \.
 
-
 --
 -- Name: conferences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.conferences_id_seq', 2, true);
 
-
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.users_id_seq', 1, true);
-
 
 --
 -- Name: conferences conferences_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
@@ -156,14 +144,12 @@ SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 ALTER TABLE ONLY public.conferences
     ADD CONSTRAINT conferences_pkey PRIMARY KEY (id);
 
-
 --
 -- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_email_key UNIQUE (email);
-
 
 --
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
@@ -172,14 +158,12 @@ ALTER TABLE ONLY public.users
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
-
 --
 -- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_username_key UNIQUE (username);
-
 
 --
 -- Name: conferences conferences_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
@@ -188,8 +172,6 @@ ALTER TABLE ONLY public.users
 ALTER TABLE ONLY public.conferences
     ADD CONSTRAINT conferences_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.users(id);
 
-
 --
 -- PostgreSQL database dump complete
 --
-
